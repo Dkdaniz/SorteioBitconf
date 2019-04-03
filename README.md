@@ -3,4 +3,5 @@
 ## Para se inscrever no sorteio acesse:
 
 
-### para startar a page instale o NPM HTTP-SERVER -G
+### 1 - NPM HTTP-SERVER -G
+### 2 - HTTP-SERVER NO DIRETORIO DA APLICAÇÃ
