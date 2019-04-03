@@ -25,7 +25,7 @@ contract SorteioVIIBitconf {
     }
 
     function _register(string _name, string _email, uint256 _id) external onlyOwner() returns (bool){
-    require(_id != 0,"id not found.");
+        require(_id != 0,"id not found.");
 
         numberUser += 1;
         people[numberUser].name = _name;
