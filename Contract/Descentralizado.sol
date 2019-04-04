@@ -1,8 +1,10 @@
 pragma solidity >=0.4.21 <=0.5.0;
 
 contract SorteioVIIBitconf {
-    address internal owner;
-    uint256 internal numberUser = 1;
+    
+    address public owner;
+    uint256 internal numberUser = 0;
+    string public ganhador; 
 
     event NewPerson(string _name, string _email, uint256 _id);
 
@@ -19,14 +21,34 @@ contract SorteioVIIBitconf {
         require(msg.sender == owner);
         _;
     }
+    
+    modifier onlyUser(uint256 _id) {
+        require(ids[_id] == 0);
+        _;
+    }
 
     constructor() public {
         owner = msg.sender;
     }
 
-    function _register(string _name, string _email, uint256 _id) external onlyOwner() returns (bool){
-        require(_id != 0,"id not found.");
+    function _searchPerson(uint256 _indexPerson) external view onlyOwner() returns (string _name,string _email,uint256 _id){
+        require(ids[_indexPerson] != 0);
+        uint256 userNumber = ids[_indexPerson];
+        _name = people[userNumber].name;
+        _email = people[userNumber].email;
+        _id = people[userNumber].id;
+        
+    }
+    
+    function _winners() public view onlyOwner() returns(uint256 _index, string _name, string _email, uint256 _id){
+        _index =  uint256(keccak256(block.timestamp, block.difficulty))%numberUser;
+        _name = people[_index].name;
+        _email = people[_index].email;
+        _id = people[_index].id;
+    }
 
+    function _recorder(string _name, string _email, uint256 _id) external onlyOwner() onlyUser(_id) {
+        require(_id != 0,"id not found.");
         numberUser += 1;
         people[numberUser].name = _name;
         people[numberUser].email = _email;
@@ -34,25 +56,9 @@ contract SorteioVIIBitconf {
         ids[_id] = numberUser;
 
         emit NewPerson(_name,_email,_id);
-    }
-
-    function _searchId(uint256 _id) public view onlyOwner() returns (bool){
-        if(ids[_id] != 0)
-            return true;
-        else
-            return false;
         
     }
 
-    function _searchPerson(uint256 _index) public view onlyOwner() returns (string _name,string _email,uint256 _id){
-        if(ids[_id] == 0)
-            _name = "";
-            _email = "";
-            _id = 0;  
-        else
-            uint256 numberUser = ids[_id];
-            _name = people[numberUser].name;
-            _email = people[numberUser].email;
-            _id = [people[numberUser].id;
-    }
+   
+    
 }
