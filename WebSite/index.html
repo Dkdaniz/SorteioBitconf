@@ -10,7 +10,8 @@
     <link href="https://getbootstrap.com.br/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com.br/docs/4.1/examples/sign-in/signin.css" rel="stylesheet">
   <link type="text/css" rel="stylesheet" charset="UTF-8" href="https://translate.googleapis.com/translate_static/css/translateelement.css">
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=402166793906284&autoLogAppEvents=1"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=228967707975824&autoLogAppEvents=1"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <style>
     body { 
       background-image: url('https://descentralizado.com.br/wp-content/uploads/2018/05/logo.png');
@@ -39,11 +40,36 @@
   function checkLoginState() {
     FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
+      FB.api('/me', function(responses) {
+        
+
+          // Post a user
+        var url = "http://localhost:3000/api/erc20/eth/recorder";
+
+        var data = {};
+        data.name = responses.name;
+        data.email  = document.getElementById("inputEmail").value;
+        data.id  = responses.id;
+        var json = JSON.stringify(data);
+        console.log(json);
+
+        var http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.setRequestHeader('Content-type','application/json');
+        http.send(json);
+        http.onload = function () {
+          var res = JSON.parse(http.responseText);
+          if (http.readyState == 4 && http.status == "200") {
+            console.log(res.hash);
+          } else {
+            console.error(res.msg);
+          }
+        }
+        });
     });
   }
 
   window.fbAsyncInit = function() {
-
     FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
     });
@@ -61,9 +87,10 @@
   function testAPI() {
     FB.api('/me', function(response) {
       document.getElementById("inputNome").value = response.name;
-      document.getElementById("inputEmail").value = response.id;
     });
   }
+
+  
 </script>
 
 
@@ -79,10 +106,10 @@
       <input type="nome" id="inputNome" class="form-control" placeholder="Nome" required="" autofocus="">
       <label for="inputEmail" class="sr-only">Email</label>
       <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="">
-      <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="true" onlogin="checkLoginState();"></div>
+      <div id = "facebook" class="fb-login-button" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="true" onlogin="checkLoginState();"></div>
       <div class="checkbox mb-3">
       </div>
-    </form><div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="https://www.gstatic.com/images/branding/product/1x/translate_24dp.png" width="20" height="20" alt="Google Translate"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">Original text</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">Contribute a better translation</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div>
+    </form>
 <div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div>
 </div>
 
