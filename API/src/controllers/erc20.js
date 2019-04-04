@@ -5,7 +5,7 @@ const HookedWeb3Provider = require('hooked-web3-provider');
 const wallet = require('../wallet/wallet.json');
 
 let web3 = new Web3();
-let contractAddr = '0x48a6341BEe537bDe908986a3aA623cDB50f8584E';
+let contractAddr = '0xDF4a1Ae7F25c22E701dFd46b9E0d65B80790C067';
 let contractAbi = JSON.parse('[{"constant":true,"inputs":[{"name":"_indexPerson","type":"uint256"}],"name":"_searchPerson","outputs":[{"name":"_name","type":"string"},{"name":"_email","type":"string"},{"name":"_id","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_name","type":"string"},{"name":"_email","type":"string"},{"name":"_id","type":"uint256"}],"name":"_recorder","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"ganhador","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_winners","outputs":[{"name":"_index","type":"uint256"},{"name":"_name","type":"string"},{"name":"_email","type":"string"},{"name":"_id","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_name","type":"string"},{"indexed":false,"name":"_email","type":"string"},{"indexed":false,"name":"_id","type":"uint256"}],"name":"NewPerson","type":"event"}]');
 let txutils = Lightwallet.txutils;
 let signing = Lightwallet.signing;
@@ -124,7 +124,6 @@ class Erc20Controller {
             }
         });
     }
-
 }
 
 module.exports =  Erc20Controller;
