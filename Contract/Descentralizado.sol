@@ -37,7 +37,6 @@ contract SorteioVIIBitconf {
         _name = people[userNumber].name;
         _email = people[userNumber].email;
         _id = people[userNumber].id;
-        
     }
     
     function _winners() public view onlyOwner() returns(uint256 _index, string _name, string _email, uint256 _id){
@@ -58,7 +57,4 @@ contract SorteioVIIBitconf {
         emit NewPerson(_name,_email,_id);
         
     }
-
-   
-    
 }
