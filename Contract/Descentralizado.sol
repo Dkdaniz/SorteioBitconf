@@ -37,13 +37,16 @@ contract SorteioVIIBitconf {
         _name = people[userNumber].name;
         _email = people[userNumber].email;
         _id = people[userNumber].id;
+        
     }
     
-    function _winners() public view onlyOwner() returns(uint256 _index, string _name, string _email, uint256 _id){
+    function _winners() external onlyOwner() returns(uint256 _index, string _name, string _email, uint256 _id){
         _index =  uint256(keccak256(block.timestamp, block.difficulty))%numberUser;
         _name = people[_index].name;
         _email = people[_index].email;
         _id = people[_index].id;
+        ganhador = _name;
+        
     }
 
     function _recorder(string _name, string _email, uint256 _id) external onlyOwner() onlyUser(_id) {
@@ -57,4 +60,7 @@ contract SorteioVIIBitconf {
         emit NewPerson(_name,_email,_id);
         
     }
+
+   
+    
 }
